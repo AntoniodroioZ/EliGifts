@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Usamos el año actual de la máquina (2026 en este entorno) 
     // Fecha final: 28 de Junio a las 00:00:00 hrs
     const currentYear = new Date().getFullYear();
-    const mainDeadline = new Date(`${currentYear}-06-28T09:00:00`);
+    const mainDeadline = new Date(`${currentYear}-06-28T00:00:00`);
 
     // Array de 6 regalos (del 23 al 28 de junio)
     const gifts = [
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 3, date: new Date(`${currentYear}-06-25T09:00:00`), title: "Disco de vinilo", link: "projects/vinyl-player.html" },
         { id: 4, date: new Date(`${currentYear}-06-26T09:00:00`), title: "Rasca y descubre", link: "projects/scratch-card.html" },
         { id: 5, date: new Date(`${currentYear}-06-27T09:00:00`), title: "Árbol de recuerdos", link: "projects/memory-tree.html" },
-        { id: 6, date: mainDeadline, title: "Cajitas de regalo", link: "projects/gift-boxes.html" }
+        { id: 6, date: new Date(`${currentYear}-06-28T09:00:00`), title: "Cajitas de regalo", link: "projects/gift-boxes.html" }
     ];
 
     const grid = document.getElementById("gifts-grid");
