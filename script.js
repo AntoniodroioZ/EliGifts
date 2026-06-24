@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Array de 6 regalos (del 23 al 28 de junio)
     const gifts = [
         { id: 1, date: new Date(`${currentYear}-06-23T09:00:00`), title: "Fin de semana en Airbnb", link: "projects/airbnb-weekend/index.html" },
-        { id: 2, date: new Date(`${currentYear}-06-24T09:00:00`), title: "Campo de tulipanes", link: "projects/tulip-field.html" },
+        { id: 2, date: new Date(`${currentYear}-06-24T09:00:00`), title: "Campo de tulipanes", link: "projects/tulip-field/index.html" },
         { id: 3, date: new Date(`${currentYear}-06-25T09:00:00`), title: "Disco de vinilo", link: "projects/vinyl-player.html" },
         { id: 4, date: new Date(`${currentYear}-06-26T09:00:00`), title: "Rasca y descubre", link: "projects/scratch-card.html" },
         { id: 5, date: new Date(`${currentYear}-06-27T09:00:00`), title: "Árbol de recuerdos", link: "projects/memory-tree.html" },

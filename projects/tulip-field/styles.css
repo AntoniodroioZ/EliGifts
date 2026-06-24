@@ -1,0 +1,339 @@
+:root {
+  --sky-gradient: linear-gradient(to bottom, #a3d9ff 0%, #e0f6ff 100%);
+  --ground-color: #689f38;
+  --ground-border: #558b2f;
+  --text-dark: #333333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--sky-gradient);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  transition: background 2s ease;
+}
+
+/* Dynamic Sky Themes */
+body.morning {
+  --sky-gradient: linear-gradient(to bottom, #ff9a9e 0%, #fecfef 100%);
+}
+body.day {
+  --sky-gradient: linear-gradient(to bottom, #a3d9ff 0%, #e0f6ff 100%);
+}
+body.sunset {
+  --sky-gradient: linear-gradient(to bottom, #fdba7a 0%, #cb5874 100%);
+}
+body.night {
+  --sky-gradient: linear-gradient(to bottom, #0f2027 0%, #203a43 50%, #2c5364 100%);
+}
+body.night .cloud {
+  opacity: 0.3;
+}
+body.night .title, body.night .back-btn {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+.top-nav {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.back-btn {
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: var(--text-dark);
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+  background-color: white;
+}
+
+.title {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 0;
+}
+
+.sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  z-index: 1;
+}
+
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.8;
+  animation: float 40s linear infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 120px;
+  height: 40px;
+  top: 10%;
+  left: -150px;
+  animation-duration: 45s;
+}
+.cloud-1::before { width: 60px; height: 60px; top: -30px; left: 15px; }
+.cloud-1::after { width: 40px; height: 40px; top: -20px; right: 15px; }
+
+.cloud-2 {
+  width: 100px;
+  height: 30px;
+  top: 25%;
+  left: -100px;
+  animation-duration: 35s;
+  animation-delay: 10s;
+  opacity: 0.6;
+}
+.cloud-2::before { width: 50px; height: 50px; top: -25px; left: 10px; }
+.cloud-2::after { width: 30px; height: 30px; top: -15px; right: 10px; }
+
+.cloud-3 {
+  width: 150px;
+  height: 50px;
+  top: 15%;
+  left: -200px;
+  animation-duration: 55s;
+  animation-delay: 20s;
+}
+.cloud-3::before { width: 70px; height: 70px; top: -35px; left: 25px; }
+.cloud-3::after { width: 50px; height: 50px; top: -25px; right: 25px; }
+
+@keyframes float {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(120vw); }
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 35vh; /* Ground area for tulips */
+  background: var(--ground-color);
+  border-top: 5px solid var(--ground-border);
+  z-index: 10;
+}
+
+/* Tulip Container */
+.tulip {
+  position: absolute;
+  width: 8px;
+  height: 0px; /* Animated via JS */
+  transform-origin: bottom center;
+}
+
+/* Sway animation applied to tulip container */
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.stem {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 100%; /* Adapts to .tulip height */
+  background: linear-gradient(to right, #2e7d32, #4caf50);
+  border-radius: 4px;
+  transform-origin: bottom center;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.leaf {
+  position: absolute;
+  width: 40px;
+  height: 90px;
+  background: linear-gradient(to top right, #388e3c, #4caf50);
+  border-radius: 50% 0 50% 0;
+  opacity: 0;
+  transform: scale(0) rotate(0deg);
+  transition: transform 0.8s ease-in, opacity 0.5s;
+  z-index: 6;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.leaf.left {
+  transform-origin: bottom right;
+  right: 8px;
+  border-radius: 0 50% 0 50%;
+  bottom: 30%; /* Adjusted relative to stem height in JS */
+}
+
+.leaf.right {
+  transform-origin: bottom left;
+  left: 5px;
+  bottom: 15%;
+}
+
+.leaf.grow.left {
+  opacity: 1;
+  transform: scale(1) rotate(-45deg);
+}
+
+.leaf.grow.right {
+  opacity: 1;
+  transform: scale(1) rotate(45deg);
+}
+
+.flower {
+  position: absolute;
+  bottom: calc(100% - 10px);
+  left: -31px;
+  width: 70px;
+  height: 80px;
+  z-index: 10;
+  transform-origin: bottom center;
+  transform: scale(0);
+  transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0px 0px 8px var(--color-light));
+}
+
+.flower.bloom {
+  transform: scale(1);
+}
+
+.petal {
+  position: absolute;
+  bottom: 0;
+  background: radial-gradient(circle at bottom, var(--color-light), var(--color-dark));
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.petal.middle {
+  width: 45px;
+  height: 75px;
+  left: 12.5px;
+  border-radius: 50% 50% 20% 20%;
+  z-index: 3;
+}
+
+.petal.left {
+  width: 45px;
+  height: 70px;
+  left: -5px;
+  border-radius: 50% 10% 20% 50%;
+  transform: rotate(-18deg);
+  z-index: 2;
+}
+
+.petal.right {
+  width: 45px;
+  height: 70px;
+  right: -5px;
+  border-radius: 10% 50% 50% 20%;
+  transform: rotate(18deg);
+  z-index: 2;
+}
+
+/* Base style for inner parts if needed */
+.inner {
+  position: absolute;
+  bottom: 5px;
+  left: 25px;
+  width: 20px;
+  height: 25px;
+  background: #ffb300;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.8;
+  filter: blur(2px);
+}
+
+/* Fireflies / Glow particles */
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-light);
+  box-shadow: 0 0 5px var(--color-light), 0 0 10px var(--color-light);
+  opacity: 0;
+  animation: float-up 3s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes float-up {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translate(calc(var(--fly-x) * 40px), -150px) scale(0); opacity: 0; }
+}
+
+/* Fireworks */
+.firework-container {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 2px;
+  z-index: 5;
+  pointer-events: none;
+}
+.firework-trail {
+  position: absolute;
+  bottom: 0;
+  left: -1px;
+  width: 3px;
+  height: 20px;
+  background: #ffdb58;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #ffdb58, 0 0 10px #ffdb58;
+}
+.firework-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* Responsive adjust */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+  .back-btn {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}
