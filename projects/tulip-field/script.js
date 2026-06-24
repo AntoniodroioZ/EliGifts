@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Determine time of day for sky theme
+    // Create celestial bodies
+    const sun = document.createElement('div');
+    sun.className = 'celestial sun';
+    const moon = document.createElement('div');
+    moon.className = 'celestial moon';
+    const sky = document.querySelector('.sky');
+    if (sky) {
+        sky.appendChild(sun);
+        sky.appendChild(moon);
+    }
+
+    // Determine time of day for sky theme and celestial bodies
     function updateSky(hour) {
         document.body.classList.remove('morning', 'day', 'sunset', 'night');
         let timeClass = 'day';
@@ -8,6 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (hour >= 17 && hour < 20) timeClass = 'sunset';
         else timeClass = 'night';
         document.body.classList.add(timeClass);
+
+        // Update Sun position (active 6 to 18)
+        if (hour >= 6 && hour <= 18) {
+            const progress = (hour - 6) / 12; // 0 to 1
+            sun.style.left = `calc(${progress * 100}vw - 40px)`;
+            sun.style.top = `calc(${10 + Math.pow(progress - 0.5, 2) * 4 * 50}vh - 40px)`;
+            sun.style.opacity = 1;
+        } else {
+            sun.style.opacity = 0;
+            // hide it off screen so it doesn't block clicks just in case
+            sun.style.top = `100vh`; 
+        }
+
+        // Update Moon position (active 18 to 6)
+        if (hour >= 18 || hour <= 6) {
+            let progress;
+            if (hour >= 18) progress = (hour - 18) / 12;
+            else progress = (hour + 6) / 12;
+            
+            moon.style.left = `calc(${progress * 100}vw - 30px)`;
+            moon.style.top = `calc(${10 + Math.pow(progress - 0.5, 2) * 4 * 50}vh - 30px)`;
+            moon.style.opacity = 1;
+        } else {
+            moon.style.opacity = 0;
+            moon.style.top = `100vh`;
+        }
     }
 
     const currentHour = new Date().getHours();
@@ -28,7 +65,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const ground = document.getElementById('ground');
-    const numberOfTulips = 26; // Amount of tulips to generate
+    
+    // Dynamic number of tulips based on screen width
+    const isMobile = window.innerWidth <= 768;
+    const numberOfTulips = isMobile ? 26 : 52; 
+
+    // Generate stars for the night sky
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars-container';
+    for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 60}vh`; // Solo en la parte superior (cielo)
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        starsContainer.appendChild(star);
+    }
+    for (let i = 0; i < 4; i++) {
+        const sStar = document.createElement('div');
+        sStar.className = 'shooting-star';
+        sStar.style.left = `${20 + Math.random() * 80}vw`;
+        sStar.style.top = `${Math.random() * 20}vh`;
+        sStar.style.animationDelay = `${Math.random() * 15}s`;
+        starsContainer.appendChild(sStar);
+    }
+
+    if (sky) sky.appendChild(starsContainer);
 
     // Vibrant tulip colors
     const colorPalettes = [
@@ -213,8 +275,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.body.classList.contains('night')) {
                 // Si es 28: de 3 a 7 fuegos. Si no: de 1 a 4.
                 const count = is28th 
-                    ? (3 + Math.floor(Math.random() * 5)) 
-                    : (1 + Math.floor(Math.random() * 4));
+                    ? (3 + Math.floor(Math.random() * 15)) 
+                    : (1 + Math.floor(Math.random() * 6));
 
                 for (let i = 0; i < count; i++) {
                     setTimeout(launchFirework, Math.random() * 800);
@@ -226,4 +288,69 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Start firework loop
     scheduleFireworks();
+
+    // --- Blimp System ---
+    const blimpMessages = [
+        "¡Tu eres el mejor regalo que la vida pudo darme! 🎁",
+        "Pensando en ti... 💭",
+        "Un campo entero solo para ti 🌷",
+        "¡Sonríe, te ves hermosa! ✨",
+        "Te quiero muchísimo ❤️",
+        "Eres mi persona favorita 🌟",
+        "Cada tulipán es un abrazo y beso para ti 🌷",
+        "Haces mis días más felices ☀️"
+    ];
+
+    function spawnBlimp() {
+        const sky = document.querySelector('.sky');
+        if (!sky) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'blimp-wrapper';
+        
+        // Randomize vertical position slightly
+        wrapper.style.top = `${5 + Math.random() * 20}%`;
+
+        const blimp = document.createElement('div');
+        blimp.className = 'blimp';
+        
+        const tail = document.createElement('div');
+        tail.className = 'blimp-tail';
+        
+        const cabin = document.createElement('div');
+        cabin.className = 'blimp-cabin';
+
+        blimp.appendChild(tail);
+        blimp.appendChild(cabin);
+
+        const ropes = document.createElement('div');
+        ropes.className = 'blimp-ropes';
+
+        const sign = document.createElement('div');
+        sign.className = 'blimp-sign';
+        // Select random message
+        sign.textContent = blimpMessages[Math.floor(Math.random() * blimpMessages.length)];
+
+        wrapper.appendChild(blimp);
+        wrapper.appendChild(ropes);
+        wrapper.appendChild(sign);
+
+        sky.appendChild(wrapper);
+
+        // Remove after animation completes (25s)
+        setTimeout(() => wrapper.remove(), 26000);
+    }
+
+    function scheduleBlimp() {
+        // Spawn every 40 to 60 seconds
+        const delay = 40000 + Math.random() * 20000;
+        setTimeout(() => {
+            spawnBlimp();
+            scheduleBlimp();
+        }, delay);
+    }
+
+    // Spawn first blimp after 5 seconds
+    setTimeout(spawnBlimp, 5000);
+    scheduleBlimp();
 });

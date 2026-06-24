@@ -326,6 +326,100 @@ body.night .title, body.night .back-btn {
   opacity: 0;
 }
 
+/* Night Sky Stars */
+.stars-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 60vh;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+  z-index: 0;
+}
+body.night .stars-container {
+  opacity: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite alternate ease-in-out;
+}
+@keyframes twinkle {
+  0% { opacity: 0.1; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 5px white; }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px white, 0 0 10px white, -10px 0 10px white;
+  opacity: 0;
+  animation: shoot 12s linear infinite;
+}
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255,255,255,0), white);
+}
+@keyframes shoot {
+  0% { transform: translate(0, 0) rotate(145deg); opacity: 0; }
+  5% { opacity: 1; }
+  /* Al usar vw tanto en X como en Y, el ángulo del trayecto siempre es de 145 grados, 
+     sin importar si el aspecto de la pantalla es vertical (móvil) u horizontal (desktop). */
+  15% { transform: translate(-80vw, 56vw) rotate(145deg); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+
+/* Celestial Bodies (Sun & Moon) */
+.celestial {
+  position: absolute;
+  border-radius: 50%;
+  transition: left 1s ease-in-out, top 1s ease-in-out, opacity 0.5s ease;
+  z-index: 0; /* Detrás de las nubes */
+}
+
+.sun {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #fff9c4 0%, #fbc02d 50%, #f57f17 100%);
+  box-shadow: 0 0 40px #fbc02d, 0 0 80px #f57f17;
+}
+
+.moon {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e0e0e0 50%, #9e9e9e 100%);
+  box-shadow: 0 0 20px #e0e0e0, 0 0 40px #ffffff;
+}
+
+/* Cráteres de la luna */
+.moon::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 35px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.15);
+  box-shadow: -15px 15px 0 -2px rgba(0,0,0,0.15), -5px 25px 0 -4px rgba(0,0,0,0.15);
+}
+
 /* Responsive adjust */
 @media (max-width: 600px) {
   .title {
@@ -336,4 +430,88 @@ body.night .title, body.night .back-btn {
     font-size: 0.9rem;
     padding: 8px 15px;
   }
+}
+
+/* Blimp & Sign */
+.blimp-wrapper {
+  position: absolute;
+  top: 15%;
+  right: -500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 50;
+  animation: float-blimp 25s linear forwards;
+}
+
+@keyframes float-blimp {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100vw - 800px)); }
+}
+
+.blimp {
+  position: relative;
+  width: 140px;
+  height: 60px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #0a2342,
+    #0a2342 20px,
+    #f4d03f 20px,
+    #f4d03f 40px
+  );
+  border-radius: 50% / 50%;
+  box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.blimp-tail {
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 25px solid #0a2342;
+  border-radius: 5px;
+}
+
+.blimp-cabin {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 15px;
+  background: #333;
+  border-radius: 5px;
+}
+
+.blimp-sign {
+  position: relative;
+  background: white;
+  padding: 8px 15px;
+  margin-left: 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  max-width: 250px;
+  text-align: center;
+  border: 2px solid #ddd;
+}
+
+/* Ropes connecting blimp to banner */
+.blimp-sign::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 10px;
+  border-top: 1px solid rgba(0,0,0,0.5);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
 }
