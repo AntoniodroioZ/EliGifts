@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primer Regalo - Fin de Semana Airbnb</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Pantalla 1: Minijuego "Haz la maleta" -->
+  <div id="screen1" class="screen active">
+    <h1>Ayúdame a empacar para tu primer regalo</h1>
+    
+    <div class="game-container">
+      <div class="suitcase" id="suitcase">
+        <div class="suitcase-body">🧳</div>
+      </div>
+      
+      <div class="items-container">
+        <div class="item" data-id="1">🛌</div>
+        <div class="item" data-id="2">🍲</div>
+        <div class="item" data-id="3">🎧</div>
+        <div class="item" data-id="4">🌷</div>
+      </div>
+    </div>
+    
+    <button id="skip-btn" class="skip-btn">Saltar minijuego ⏭️</button>
+  </div>
+
+  <!-- Pantalla 2: Interfaz "Falso Airbnb" -->
+  <div id="screen2" class="screen hidden airbnb-mode">
+    <div class="airbnb-container">
+      <div class="main-image-carousel">
+        <div class="top-nav">
+          <a href="../../index.html" class="nav-icon back-icon" style="text-decoration: none;">❮</a>
+          <div class="nav-icon share-icon">♡</div>
+        </div>
+        <div class="carousel-track">
+          <img src="resources/images/1.avif" alt="Foto del Airbnb 1" class="carousel-image">
+          <img src="resources/images/2.avif" alt="Foto del Airbnb 2" class="carousel-image">
+          <img src="resources/images/3.avif" alt="Foto del Airbnb 3" class="carousel-image">
+        </div>
+      </div>
+
+      <div class="airbnb-content">
+        <header class="airbnb-header">
+          <h1>Refugio de Cumpleaños para Eli 🌷</h1>
+          <p class="subtitle"><strong>★ 4.56</strong> · Anfitrión excelente</p>
+        </header>
+
+        <section class="host-section">
+          <div class="host-info">
+            <h2>Organizador: Toño</h2>
+            <p>2 huéspedes · 1 habitación · 1 cama · 1 baño</p>
+          </div>
+          <div class="host-avatar">🧑‍💻</div>
+        </section>
+
+        <section class="amenities-section">
+          <h2>Lo que ofrece este lugar</h2>
+          <ul class="amenities-list">
+            <li>
+              <span class="icon">🛏️</span>
+              <div class="amenity-text">
+                <strong>Cama extra suave</strong>
+                <span>Para dormir todo lo que quieras</span>
+              </div>
+            </li>
+            <li>
+              <span class="icon">🍲</span>
+              <div class="amenity-text">
+                <strong>Caldito de pollo o la comida que mas te guste</strong>
+                <span>Comida favorita de Eli para aliviar el malestar de estos días</span>
+              </div>
+            </li>
+            <li>
+              <span class="icon">🎶</span>
+              <div class="amenity-text">
+                <strong>Musica lista</strong>
+                <span>Para relajarte y escuchar tus canciones favoritas</span>
+              </div>
+            </li>
+            <li>
+              <span class="icon">🏠</span>
+              <div class="amenity-text">
+                <strong>Todo el día para consentirte</strong>
+                <span>No hay prisa, nos quedamos todo el fin de semana</span>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div id="real-details" class="hidden-details">
+          <h3>Nos vamos de fin de semana. Aquí están los detalles reales:</h3>
+          <div class="real-image-container">
+            <!-- <div class="placeholder-details">🎟️ Captura de reserva real aquí</div> -->
+            <img src="resources/images/booking.jpeg" alt="Foto del Airbnb 1" class="carousel-image">
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-footer">
+        <div class="price-info">
+          <span class="price"><strong>$0</strong> <span class="currency">MXN</span> noche</span>
+          <span class="date">28 - 30 jun</span>
+        </div>
+        <button id="confirm-btn" class="primary-btn">Reservar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor para el confeti -->
+  <div id="confetti-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

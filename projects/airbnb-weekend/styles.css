@@ -1,0 +1,440 @@
+:root {
+  --pastel-pink: #ffd1dc;
+  --pastel-pink-dark: #ffb6c1;
+  --pastel-green: #dcedc1;
+  --pastel-yellow: #fffdd0;
+  --pastel-yellow-dark: #fdfd96;
+  --text-dark: #333333;
+  --text-light: #666666;
+  --white: #ffffff;
+  --bg-gray: #f7f7f7;
+  --border-gray: #dddddd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--pastel-pink);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.screen {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  background-color: var(--white);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: absolute;
+  top: 0;
+  transform-origin: top center;
+}
+
+.screen.active {
+  opacity: 1;
+  transform: none;
+  z-index: 10;
+}
+
+.screen.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Screen 1: Minigame */
+#screen1 h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+  color: var(--text-dark);
+}
+
+.game-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.suitcase {
+  font-size: 8rem;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.suitcase.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.suitcase.zoom {
+  animation: zoomIn 0.8s forwards;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-5px, 0, 0) rotate(-5deg); }
+  20%, 80% { transform: translate3d(5px, 0, 0) rotate(5deg); }
+  30%, 50%, 70% { transform: translate3d(-10px, 0, 0) rotate(-10deg); }
+  40%, 60% { transform: translate3d(10px, 0, 0) rotate(10deg); }
+}
+
+@keyframes zoomIn {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(5); opacity: 0; }
+}
+
+.items-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.item {
+  font-size: 4rem;
+  position: absolute;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  user-select: none;
+}
+
+/* Initial positions for items */
+.item[data-id="1"] { top: 10%; left: 10%; }
+.item[data-id="2"] { top: 10%; right: 10%; }
+.item[data-id="3"] { bottom: 20%; left: 5%; }
+.item[data-id="4"] { bottom: 20%; right: 5%; }
+
+.item.packed {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+}
+
+.skip-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.skip-btn:hover {
+  background-color: var(--bg-gray);
+}
+
+/* Screen 2: Fake Airbnb (Airbnb Mode) */
+.screen.airbnb-mode {
+  padding: 0; /* Remove default padding for edge-to-edge images */
+  background-color: var(--white);
+  color: #222222;
+  font-family: 'Helvetica Neue', Arial, sans-serif; /* Standard web font closest to Circular */
+}
+
+.airbnb-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80px; /* Space for sticky footer */
+}
+
+.main-image-carousel {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+.top-nav {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #222;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.airbnb-content {
+  padding: 24px;
+}
+
+.airbnb-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #DDDDDD;
+  padding-bottom: 24px;
+}
+
+.airbnb-header h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: #222222;
+  text-align: left;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #222222;
+}
+
+.host-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #DDDDDD;
+  margin-bottom: 24px;
+}
+
+.host-info h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.host-info p {
+  font-size: 0.9rem;
+  color: #717171;
+}
+
+.host-avatar {
+  width: 48px;
+  height: 48px;
+  background-color: var(--pastel-pink);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.amenities-section {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.amenities-section h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.amenities-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.amenities-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.amenities-list .icon {
+  font-size: 1.5rem;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.amenity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.amenity-text strong {
+  font-weight: 600;
+  color: #222222;
+  font-size: 1rem;
+}
+
+.amenity-text span {
+  color: #717171;
+  font-size: 0.9rem;
+}
+
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  padding: 16px 24px;
+  border-top: 1px solid #DDDDDD;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.price-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-info .price {
+  font-size: 1rem;
+  color: #222222;
+}
+
+.price-info .price strong {
+  font-weight: 600;
+}
+
+.price-info .currency {
+  font-size: 0.9rem;
+}
+
+.price-info .date {
+  font-size: 0.85rem;
+  color: #717171;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background-color: #E61E4D; /* Airbnb Red */
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+.primary-btn:hover {
+  background-color: #D70466;
+}
+
+.primary-btn:active {
+  transform: scale(0.96);
+}
+
+.hidden-details {
+  display: none;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #E61E4D;
+  animation: slideDown 0.5s ease;
+}
+
+.hidden-details h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+.placeholder-details {
+  background-color: #F7F7F7;
+  height: 150px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #717171;
+  font-weight: 400;
+  border: 1px solid #DDDDDD;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Confetti */
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
