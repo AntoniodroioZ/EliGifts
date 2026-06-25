@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Te dedico esta canción</title>
+
+    <!-- Fuentes de Google: Caveat para la dedicatoria manuscrita -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ============================================== -->
+    <!--  PANTALLA DE BLOQUEO (Overlay con Corazón)     -->
+    <!-- ============================================== -->
+    <div id="lock-screen" class="lock-screen">
+        <p class="lock-subtitle">Ingresa tu fecha especial ✨</p>
+
+        <!-- El Corazón-Candado -->
+        <div class="heart-lock">
+            <!-- El arco del candado (la parte de arriba) -->
+            <div class="lock-shackle"></div>
+
+            <!-- Cuerpo del corazón con los selectores numéricos -->
+            <div class="heart-body">
+                <div class="heart-body-inner">
+                    <!-- Selectores de combinación DD / MM / AAAA -->
+                    <div class="combo-selectors">
+                        <!-- DÍA -->
+                        <div class="combo-group">
+                            <label>Día</label>
+                            <div class="spinner">
+                                <button class="spin-btn spin-up" data-target="combo-dia" data-dir="up">▲</button>
+                                <input type="text" id="combo-dia" class="combo-input" value="01" maxlength="2" readonly>
+                                <button class="spin-btn spin-down" data-target="combo-dia" data-dir="down">▼</button>
+                            </div>
+                        </div>
+
+                        <span class="combo-separator">/</span>
+
+                        <!-- MES -->
+                        <div class="combo-group">
+                            <label>Mes</label>
+                            <div class="spinner">
+                                <button class="spin-btn spin-up" data-target="combo-mes" data-dir="up">▲</button>
+                                <input type="text" id="combo-mes" class="combo-input" value="01" maxlength="2" readonly>
+                                <button class="spin-btn spin-down" data-target="combo-mes" data-dir="down">▼</button>
+                            </div>
+                        </div>
+
+                        <span class="combo-separator">/</span>
+
+                        <!-- AÑO -->
+                        <div class="combo-group">
+                            <label>Año</label>
+                            <div class="spinner">
+                                <button class="spin-btn spin-up" data-target="combo-anio" data-dir="up">▲</button>
+                                <input type="text" id="combo-anio" class="combo-input combo-input-wide" value="2020" maxlength="4" readonly>
+                                <button class="spin-btn spin-down" data-target="combo-anio" data-dir="down">▼</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de desbloquear -->
+        <button id="btn-desbloquear" class="btn-unlock">🔓 Desbloquear</button>
+    </div>
+
+    <!-- ============================================== -->
+    <!--  TARJETA PRINCIPAL (Raspadita + Widget)        -->
+    <!-- ============================================== -->
+    <div id="main-content" class="main-content hidden">
+        <h1 class="main-title">Esta canción me recuerda a lo que siento por tí 🥰</h1>
+
+        <!-- Contenedor tipo Cristal (Glassmorphism) -->
+        <div class="glass-card">
+            <!-- El área de raspar envuelve TODO (código + widget) -->
+            <div class="scratch-container">
+                <div class="hidden-content">
+                    <div class="spotify-code-container">
+                        <img id="spotify-code" alt="Código de Spotify" />
+                    </div>
+
+                    <!-- El Widget Oficial de Spotify -->
+                    <iframe id="spotify-widget" width="100%" height="152" frameborder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                </div>
+
+                <!-- Capa dorada para raspar -->
+                <canvas id="scratch-canvas"></canvas>
+            </div>
+
+            <!-- Dedicatoria personalizada con fuente manuscrita -->
+            <div class="dedicatoria">
+                <p>Tú haces que las canciones tengan significado, te quiero mucho. 💖</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script con toda la lógica -->
+    <script src="script.js"></script>
+</body>
+
+</html>
