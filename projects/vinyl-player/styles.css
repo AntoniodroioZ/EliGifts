@@ -1,0 +1,222 @@
+:root {
+    --color-green: #d4edda;
+    --color-yellow: #fff3cd;
+    --color-pink: #f8d7da;
+    --color-dark: #333;
+    --color-gray: #777;
+    --color-vinyl: #111;
+    --bg-color: #fcfcfc;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.player-container {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .player-container {
+        flex-direction: column;
+    }
+}
+
+/* Sección del Tocadiscos */
+.turntable-section {
+    flex: 1;
+    background-color: var(--color-yellow);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin-bottom: 30px;
+}
+
+.vinyl {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #333 10%, #111 90%);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 2px solid #222;
+}
+
+.vinyl::before, .vinyl::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid #333;
+}
+
+.vinyl::before {
+    width: 80%;
+    height: 80%;
+}
+
+.vinyl::after {
+    width: 60%;
+    height: 60%;
+}
+
+/* Animación de giro */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.vinyl.playing {
+    animation: spin 4s linear infinite;
+}
+
+/* Imagen de la portada */
+.vinyl img {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    border: 2px solid var(--color-pink);
+}
+
+.vinyl-center-hole {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+/* Controles */
+.controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-dark);
+}
+
+.control-btn:hover {
+    background-color: var(--color-pink);
+    transform: scale(1.05);
+}
+
+.control-btn.play-btn {
+    width: 60px;
+    height: 60px;
+}
+
+.control-btn.play-btn svg {
+    width: 36px;
+    height: 36px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Sección de la Playlist */
+.playlist-section {
+    flex: 1;
+    background-color: var(--color-pink);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-section h2 {
+    margin-bottom: 20px;
+    color: var(--color-dark);
+    font-size: 1.5rem;
+}
+
+.playlist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.playlist-item {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-item:hover {
+    background-color: white;
+    transform: translateY(-2px);
+}
+
+.playlist-item.active {
+    background-color: white;
+    border-left: 5px solid var(--color-dark);
+    font-weight: bold;
+}
+
+.song-title {
+    color: var(--color-dark);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.song-artist {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+}

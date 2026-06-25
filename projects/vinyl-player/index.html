@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Vinilo Personalizado</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="player-container">
+        <!-- Sección del Tocadiscos -->
+        <div class="turntable-section">
+            <div class="vinyl-container">
+                <div class="vinyl" id="vinyl">
+                    <img id="cover-image" src="" alt="Portada del álbum">
+                    <div class="vinyl-center-hole"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="prev-btn" class="control-btn" aria-label="Anterior">
+                    <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button id="play-btn" class="control-btn play-btn" aria-label="Reproducir/Pausar">
+                    <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="pause-icon" class="hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <button id="next-btn" class="control-btn" aria-label="Siguiente">
+                    <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+            </div>
+            <audio id="audio-player"></audio>
+        </div>
+
+        <!-- Sección de la Playlist -->
+        <div class="playlist-section">
+            <h2>Mi Playlist</h2>
+            <ul id="playlist" class="playlist">
+                <!-- Los elementos de la lista se generarán dinámicamente aquí -->
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
