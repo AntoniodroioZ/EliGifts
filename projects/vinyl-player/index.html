@@ -11,10 +11,20 @@
         <!-- Sección del Tocadiscos -->
         <div class="turntable-section">
             <div class="vinyl-container">
+                <div class="tonearm" id="tonearm">
+                    <div class="tonearm-pivot"></div>
+                    <div class="tonearm-arm"></div>
+                    <div class="tonearm-head"></div>
+                </div>
                 <div class="vinyl" id="vinyl">
                     <img id="cover-image" src="" alt="Portada del álbum">
                     <div class="vinyl-center-hole"></div>
                 </div>
+            </div>
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" min="0" max="100" value="0">
+                <span id="total-time">0:00</span>
             </div>
             <div class="controls">
                 <button id="prev-btn" class="control-btn" aria-label="Anterior">
@@ -33,7 +43,8 @@
 
         <!-- Sección de la Playlist -->
         <div class="playlist-section">
-            <h2>Mi Playlist</h2>
+            <h2>Nuestras canciones especiales</h2>
+            <p class="playlist-description">Formemos una playlist juntos, que sea un proyecto que ambos llenemos con el pasar del tiempo, esto solo es el inicio.</p>
             <ul id="playlist" class="playlist">
                 <!-- Los elementos de la lista se generarán dinámicamente aquí -->
             </ul>
