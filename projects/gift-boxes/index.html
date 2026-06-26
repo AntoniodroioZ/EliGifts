@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gachapon de Sorpresas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="title">El Gachapon de Sorpresas</h1>
+        
+        <div class="message-box" id="messageBox">¡Gira la perilla para sacar un premio!</div>
+
+        <div class="gachapon-machine">
+            <!-- Moño de Hello Kitty -->
+            <div class="hello-kitty-bow">
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Ala izquierda -->
+                    <path d="M50 30 C30 5, 0 10, 5 35 C10 60, 40 50, 50 30 Z" fill="#ff3366"/>
+                    <!-- Ala derecha -->
+                    <path d="M50 30 C70 5, 100 10, 95 35 C90 60, 60 50, 50 30 Z" fill="#ff3366"/>
+                    <!-- Centro -->
+                    <circle cx="50" cy="30" r="10" fill="#ffffff"/>
+                </svg>
+            </div>
+
+            <div class="machine-top">
+                <div class="glass-dome">
+                    <!-- Decorational capsules -->
+                    <div class="bg-capsule" style="background: var(--pink-pastel); top: 55%; left: 15%; animation-delay: 0s;"></div>
+                    <div class="bg-capsule" style="background: var(--green-pastel); top: 65%; left: 45%; animation-delay: 0.3s;"></div>
+                    <div class="bg-capsule" style="background: var(--yellow-pastel); top: 48%; left: 65%; animation-delay: 0.6s;"></div>
+                    <div class="bg-capsule" style="background: var(--pink-dark); top: 70%; left: 20%; animation-delay: 0.9s;"></div>
+                </div>
+            </div>
+            
+            <div class="machine-base">
+                <div class="mechanism">
+                    <button id="girarBtn" class="knob">Girar<br>para<br>premio!</button>
+                </div>
+                <div class="tray-area">
+                    <div class="tray"></div>
+                    <div id="activeCapsule" class="capsule hidden">
+                        <div class="capsule-top"></div>
+                        <div class="capsule-bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p>¡Sigue tocando!</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="prizeModal" class="modal hidden">
+        <div class="modal-content">
+            <div id="confettiContainer" class="confetti-container"></div>
+            <h2 class="modal-title">¡Sorpresa! 🎉</h2>
+            <p id="prizeText" class="prize-text"></p>
+            <button id="closeModalBtn" class="close-btn">¡Yay!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
