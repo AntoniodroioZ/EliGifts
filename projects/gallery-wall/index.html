@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pared de Galería Infinita</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Viewport que actúa como la ventana de la cámara -->
+    <main class="viewport" id="viewport">
+        <!-- Canvas infinito donde se colocarán los cuadros -->
+        <div class="canvas-wall" id="canvas-wall">
+            <!-- Los cuadros se generan dinámicamente aquí -->
+        </div>
+    </main>
+
+    <!-- Modal para Fotos / Lightbox -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <img id="modal-image" src="" alt="Recuerdo ampliado">
+        </div>
+    </div>
+
+    <!-- Instrucciones sutiles flotantes -->
+    <div class="drag-instruction">
+        <span class="icon">🖐️</span> Arrastra para explorar la galería
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

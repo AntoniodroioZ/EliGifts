@@ -1,0 +1,257 @@
+:root {
+    /* Paleta de Colores de la Galería */
+    --wall-bg: #f5f2eb; /* Beige muy suave */
+    --wall-pattern: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.02),
+        rgba(0, 0, 0, 0.02) 10px,
+        rgba(0, 0, 0, 0) 10px,
+        rgba(0, 0, 0, 0) 20px
+    );
+    --accent-yellow: #fff59d;
+    --accent-pink: #f8bbd0;
+    --modal-backdrop: rgba(248, 187, 208, 0.85);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Evita el scroll nativo, usaremos drag/pan */
+    background-color: #000; /* Fondo detrás por si acaso */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none; /* Evitar que se seleccione texto al arrastrar */
+}
+
+/* Viewport (Cámara) */
+.viewport {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    cursor: grab;
+    background-color: var(--wall-bg);
+}
+
+.viewport:active {
+    cursor: grabbing;
+}
+
+/* Canvas Infinito */
+.canvas-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Un tamaño ridículamente grande para simular infinidad */
+    width: 20000px;
+    height: 20000px;
+    background-color: var(--wall-bg);
+    background-image: var(--wall-pattern);
+    /* Usaremos transform translate en JS para mover esto */
+    transform-origin: center center;
+    will-change: transform;
+}
+
+/* Instrucciones flotantes */
+.drag-instruction {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-size: 14px;
+    color: #555;
+    pointer-events: none;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeOut 3s forwards 4s; /* Desaparece después de unos segundos */
+}
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Elemento contenedor individual del cuadro */
+.picture-frame-wrapper {
+    position: absolute; /* Para acomodo procedural en el canvas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.3s ease;
+    cursor: pointer;
+}
+
+.picture-frame-wrapper:hover {
+    z-index: 50 !important;
+}
+
+/* Imagen base dentro del marco */
+.picture-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    background-color: #fff;
+    pointer-events: none; /* Para evitar drag de la imagen nativa */
+}
+
+/* --- CLASES DE MARCOS VINTAGE --- */
+
+/* Marco Dorado Clásico */
+.frame-gold {
+    padding: 24px;
+    background: #d4af37;
+    background: linear-gradient(135deg, #f0e68c 0%, #d4af37 50%, #b8860b 100%);
+    box-shadow: 
+        10px 15px 25px rgba(0,0,0,0.3), 
+        inset 0 0 8px rgba(255,255,255,0.8),
+        inset 0 0 20px rgba(0,0,0,0.5);
+    border: 3px solid #8b6508;
+    border-radius: 4px;
+}
+.frame-gold .picture-img {
+    border: 2px solid #5c4304;
+}
+
+/* Marco de Madera Oscura */
+.frame-wood {
+    padding: 18px;
+    background: #5c4033;
+    background: repeating-linear-gradient(
+        to bottom,
+        #5c4033,
+        #5c4033 8px,
+        #4a332a 8px,
+        #4a332a 16px
+    );
+    box-shadow: 8px 12px 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(0,0,0,0.9);
+    border: 4px solid #2e1a11;
+    border-radius: 6px;
+}
+.frame-wood .picture-img {
+    border: 8px solid #fdf5e6; /* Passepartout interno crudo */
+    box-shadow: 0 0 5px rgba(0,0,0,0.3) inset;
+}
+
+/* Marco Plateado Elegante */
+.frame-silver {
+    padding: 14px;
+    background: #c0c0c0;
+    background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 40%, #808080 100%);
+    box-shadow: 5px 10px 15px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,1);
+    border: 2px solid #696969;
+    border-radius: 2px;
+}
+.frame-silver .picture-img {
+    border: 20px solid #fff; /* Passepartout grueso blanco */
+}
+
+/* Marco Ovalado Antiguo */
+.frame-oval {
+    padding: 20px;
+    background: #8b4513;
+    background: radial-gradient(ellipse at center, #a0522d 0%, #5c2e0b 100%);
+    border-radius: 50%;
+    box-shadow: 8px 12px 25px rgba(0,0,0,0.4), inset 0 0 15px rgba(0,0,0,0.9);
+    border: 5px solid #3d1c04;
+}
+.frame-oval .picture-img {
+    border-radius: 50%;
+    /* No forzamos aspect ratio aquí, lo haremos en JS según el tamaño aleatorio */
+    border: 4px solid #d2b48c; /* Borde interno fino */
+}
+
+/* --- LIGHTBOX / MODAL --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-backdrop);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 6px solid #fff;
+    transform: scale(1);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal.hidden .modal-content {
+    transform: scale(0.9);
+}
+
+#modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.close-btn {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 45px;
+    height: 45px;
+    background-color: #fff;
+    color: var(--accent-pink);
+    border: 3px solid var(--accent-pink);
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    background-color: var(--accent-pink);
+    color: #fff;
+}

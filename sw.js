@@ -11,7 +11,7 @@ const ASSETS_TO_CACHE = [
   './projects/airbnb-weekend.html',
   './projects/vinyl-player.html',
   './projects/scratch-card.html',
-  './projects/memory-tree.html',
+  './projects/gallery-wall.html',
   './projects/gift-boxes.html'
 ];
 
