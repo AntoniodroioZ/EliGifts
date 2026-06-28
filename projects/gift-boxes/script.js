@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Array de premios
     let prizes = [
         "Una carta súper especial 💌",
-        "Tus flores favoritas (Tulipanes) 🌷",
+        "Flores bonitas para la cumpleañera 🌸",
         "Caja de cartitas de Hello Kitty 🎀",
         "Una comidita cumpleañera 🍲"
     ];

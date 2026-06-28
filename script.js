@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 3, date: new Date(`${currentYear}-06-25T09:00:00`), title: "Rasca y descubre", link: "projects/tickets-spotify/index.html" },
         { id: 4, date: new Date(`${currentYear}-06-26T09:00:00`), title: "Tengamos una playlist", link: "projects/vinyl-player/index.html" },
         { id: 5, date: new Date(`${currentYear}-06-27T09:00:00`), title: "Pared de Galería", link: "projects/gallery-wall/index.html" },
-        { id: 6, date: new Date(`${currentYear}-06-28T09:00:00`), title: "Cajitas de regalo", link: "projects/gift-boxes/index.html" }
+        { id: 6, date: new Date(`${currentYear}-06-28T09:00:00`), title: "Gachapon de sorpresitas", link: "projects/gift-boxes/index.html" }
     ];
 
     const grid = document.getElementById("gifts-grid");
